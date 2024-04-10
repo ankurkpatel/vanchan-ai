@@ -28,9 +28,15 @@ const Stocks = dynamic(() => import('./stocks').then(mod => mod.Stocks), {
   loading: () => <StocksSkeleton />
 })
 
+const MultipleChoiceQuiz = dynamic(() => import('./multiple-choice-questions').then(mod => mod.MultipleChoiceQuiz), {
+  ssr: false,
+  loading: () => <StocksSkeleton />
+})
+
+
 const Events = dynamic(() => import('./events').then(mod => mod.Events), {
   ssr: false,
   loading: () => <EventsSkeleton />
 })
 
-export { Stock, Purchase, Stocks, Events }
+export { Stock, Purchase, Stocks, Events, MultipleChoiceQuiz }

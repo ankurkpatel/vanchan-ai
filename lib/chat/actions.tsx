@@ -35,6 +35,7 @@ import { saveChat } from '@/app/actions'
 import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat } from '@/lib/types'
 import { auth } from '@/auth'
+import {MultipleChoiceQuiz} from '@/components/stocks/multiple-choice-questions'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || ''
@@ -149,14 +150,14 @@ async function submitUserMessage(content: string) {
       {
         role: 'system',
         content: `\
-You are a stock trading conversation bot and you can help users buy stocks, step by step.
-You and the user can discuss stock prices and the user can adjust the amount of stocks they want to buy, or place an order, in the UI.
+You are a stock trading conversation bot and you can help students revise a particular topic, subjects and also
+provide a test of multiple choice questions.
 
 Messages inside [] means that it's a UI element or a user event. For example:
 - "[Price of AAPL = 100]" means that an interface of the stock price of AAPL is shown to the user.
 - "[User has changed the amount of AAPL to 10]" means that the user has changed the amount of AAPL to 10 in the UI.
 
-If the user requests purchasing a stock, call \`show_stock_purchase_ui\` to show the purchase UI.
+If the user requests for revising a subject, all \`multipleChoiceQuestions\` to test their understanding of a subject matter.
 If the user just wants the price, call \`show_stock_price\` to show the price.
 If you want to show trending stocks, call \`list_stocks\`.
 If you want to show events, call \`get_events\`.
@@ -196,18 +197,24 @@ Besides that, you can also chat with users and do some calculations if needed.`
       return textNode
     },
     functions: {
-      listStocks: {
-        description: 'List three imaginary stocks that are trending.',
+      multipleChoiceQuestions: {
+        description: 'generate a list of mutiple choice questions to test students understanding',
         parameters: z.object({
-          stocks: z.array(
+          questions: z.array(
             z.object({
-              symbol: z.string().describe('The symbol of the stock'),
-              price: z.number().describe('The price of the stock'),
-              delta: z.number().describe('The change in price of the stock')
+              id: z.string().describe('The unique identifier for the question'),
+              text: z.string().describe('The text of the question'),
+              choices: z.array(
+                z.object({
+                  label: z.string().describe('The label for the choice option'),
+                  value: z.string().optional().describe('The value for the choice option (optional)'),
+                })
+              ).nonempty().describe('The choices for the question'),
+              answer: z.string().describe('The correct answer for the question'),
             })
-          )
+          ).nonempty().describe('The array of multiple-choice questions'),
         }),
-        render: async function* ({ stocks }) {
+        render: async function* ({ questions }) {
           yield (
             <BotCard>
               <StocksSkeleton />
@@ -223,15 +230,15 @@ Besides that, you can also chat with users and do some calculations if needed.`
               {
                 id: nanoid(),
                 role: 'function',
-                name: 'listStocks',
-                content: JSON.stringify(stocks)
+                name: 'multipleChoiceQuestions',
+                content: JSON.stringify({ questions})
               }
             ]
           })
 
           return (
             <BotCard>
-              <Stocks props={stocks} />
+              <MultipleChoiceQuiz questions={questions}/>
             </BotCard>
           )
         }
@@ -469,9 +476,9 @@ export const getUIStateFromAIState = (aiState: Chat) => {
       id: `${aiState.chatId}-${index}`,
       display:
         message.role === 'function' ? (
-          message.name === 'listStocks' ? (
+          message.name === 'multipleChoiceQuestions' ? (
             <BotCard>
-              <Stocks props={JSON.parse(message.content)} />
+              <MultipleChoiceQuiz questions={JSON.parse(message.content)} />
             </BotCard>
           ) : message.name === 'showStockPrice' ? (
             <BotCard>
