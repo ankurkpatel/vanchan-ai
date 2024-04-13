@@ -8,11 +8,11 @@ const Reader = ({id, session, missingKeys} : ChatProps) => {
     const {isChatWindowOpen, toggleChatWindow} = useChatWindow()
 
     return (
-    <div className="flex w-full bg-background">
+    <div className="flex w-full bg-background overflow-auto">
    { isChatWindowOpen && <div className="md:w-8/12">
 
     </div>}
-    <div className={`${isChatWindowOpen ? 'md:w-4/12' : ''} mx-auto`}>
+    <div className={`${isChatWindowOpen ? 'md:w-4/12' : ''} mx-auto overflow-auto w-full`}>
     <Chat id={id} session={session} missingKeys={missingKeys} />
     </div>
     </div>

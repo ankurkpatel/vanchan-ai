@@ -21,10 +21,9 @@ import {
 
 import { z } from 'zod'
 import { EventsSkeleton } from '@/components/stocks/events-skeleton'
-import { Events } from '@/components/stocks/events'
+import { Events } from '@/components/stocks'
 import { StocksSkeleton } from '@/components/stocks/stocks-skeleton'
-import { Stocks } from '@/components/stocks/stocks'
-import { StockSkeleton } from '@/components/stocks/stock-skeleton'
+import { Stocks } from '@/components/stocks'
 import {
   formatNumber,
   runAsyncFnWithoutBlocking,
@@ -35,7 +34,7 @@ import { saveChat } from '@/app/actions'
 import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat } from '@/lib/types'
 import { auth } from '@/auth'
-import {MultipleChoiceQuiz} from '@/components/stocks/multiple-choice-questions'
+import { MultipleChoiceQuiz } from '@/components/stocks/multiple-choice-questions'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || ''
@@ -198,7 +197,7 @@ Besides that, you can also chat with users and do some calculations if needed.`
     },
     functions: {
       multipleChoiceQuestions: {
-        description: 'generate a list of mutiple choice questions to test students understanding',
+        description: 'generate a list of 5 mutiple choice questions to test students understanding',
         parameters: z.object({
           questions: z.array(
             z.object({
@@ -258,7 +257,7 @@ Besides that, you can also chat with users and do some calculations if needed.`
         render: async function* ({ symbol, price, delta }) {
           yield (
             <BotCard>
-              <StockSkeleton />
+              <StocksSkeleton />
             </BotCard>
           )
 
@@ -478,7 +477,7 @@ export const getUIStateFromAIState = (aiState: Chat) => {
         message.role === 'function' ? (
           message.name === 'multipleChoiceQuestions' ? (
             <BotCard>
-              <MultipleChoiceQuiz questions={JSON.parse(message.content)} />
+              <MultipleChoiceQuiz questions={JSON.parse(message.content).questions} />
             </BotCard>
           ) : message.name === 'showStockPrice' ? (
             <BotCard>

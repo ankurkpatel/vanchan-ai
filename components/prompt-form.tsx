@@ -66,7 +66,7 @@ export function PromptForm({
         setMessages(currentMessages => [...currentMessages, responseMessage])
       }}
     >
-      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">
+      <div className="relative md:mb-3 sm:mb-2 md:rounded-2xl flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
@@ -101,7 +101,7 @@ export function PromptForm({
         <div className="absolute right-0 top-[13px] sm:right-4">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button type="submit" size="icon" disabled={input === ''}>
+              <Button type="submit" size="icon" disabled={input === ''} className='rounded-full'>
                 <IconArrowElbow />
                 <span className="sr-only">Send message</span>
               </Button>

@@ -1,7 +1,10 @@
 
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { z } from 'zod';
+import { CardDescription, CardHeader, CardContent, CardFooter, Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { parse } from 'path';
 
 // Define the Zod schema for multiple-choice questions
 const MultipleChoiceQuizSchema = z.object({
@@ -57,6 +60,12 @@ export const MultipleChoiceQuiz: React.FC<QuizProps> = ({ questions }) => {
   const [userAnswers, setUserAnswers] = useState<{ [key: string]: string }>({});
   const [showResult, setShowResult] = useState(false);
 
+  useEffect(()=> {
+    console.log(questions);
+    // const parsedData = MultipleChoiceQuizSchema.parse(questions);
+    // console.log(parsedData)
+  },[])
+
   const handleAnswerChange = (questionId: string, answer: string) => {
     setUserAnswers((prevAnswers) => ({
       ...prevAnswers,
@@ -81,11 +90,17 @@ export const MultipleChoiceQuiz: React.FC<QuizProps> = ({ questions }) => {
   return (
     <div>
       <h2>Multiple Choice Quiz</h2>
-      {questions.map((question) => (
-        <div key={question.id}>
-          <h3>{question.text}</h3>
+      {questions && questions.map((question) => (
+        <Card key={question.id} className='my-2'>
+  <CardHeader>
+        <div className="flex items-center space-x-1">
+          <div className="text-sm font-medium leading-none">{question.id}</div>
+        </div>
+        <CardDescription>{question.text}</CardDescription>
+      </CardHeader>
+  
           {question.choices.map((choice) => (
-            <div key={choice.label}>
+            <CardContent key={choice.label}>
               <label>
                 <input
                   type="radio"
@@ -96,12 +111,14 @@ export const MultipleChoiceQuiz: React.FC<QuizProps> = ({ questions }) => {
                 />
                 {choice.label}
               </label>
-            </div>
+            </CardContent>
           ))}
-        </div>
+        </Card>
       ))}
-      <button onClick={handleSubmit}>Submit</button>
-      {showResult && <p>{evaluateAnswers()}</p>}
+      <CardFooter className="flex gap-2">
+        <Button size="sm" onClick={handleSubmit}>Submit</Button>
+        {showResult && <p>{evaluateAnswers()}</p>}
+      </CardFooter>
     </div>
   );
 };

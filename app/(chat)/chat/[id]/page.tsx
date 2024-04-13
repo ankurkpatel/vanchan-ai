@@ -32,6 +32,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
   const session = (await auth()) as Session
   const missingKeys = await getMissingKeys()
 
+  
   if (!session?.user) {
     redirect(`/login?next=/chat/${params.id}`)
   }
@@ -58,3 +59,5 @@ export default async function ChatPage({ params }: ChatPageProps) {
     </AI>
   )
 }
+
+//  this page has issue becasue message storing is not working as expected.ß

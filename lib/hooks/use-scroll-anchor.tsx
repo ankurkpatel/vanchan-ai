@@ -21,7 +21,7 @@ export const useScrollAnchor = () => {
     if (messagesRef.current) {
       if (isAtBottom && !isVisible) {
         messagesRef.current.scrollIntoView({
-          block: 'end'
+          block: 'nearest'
         })
       }
     }
