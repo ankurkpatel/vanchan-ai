@@ -13,7 +13,7 @@ export const metadata = {
   metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
   title: {
     default: 'Dobu',
-    template: `%s - Dobu AI Tutor`
+    template: `Dobu AI Tutor`
   },
   description: 'An AI-powered chatbot to help you understand any questions',
   icons: {
@@ -22,6 +22,12 @@ export const metadata = {
     apple: '/apple-touch-icon.png'
   }
 }
+
+const inter = Inter({
+  weight : 'variable',
+  variable: '--font-inter',
+  preload :false
+})
 
 export const viewport = {
   themeColor: [
@@ -40,7 +46,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={cn(
           'font-sans antialiased',
-          GeistSans.variable,
+         inter.variable,
           GeistMono.variable
         )}
       >

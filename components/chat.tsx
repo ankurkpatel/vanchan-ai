@@ -8,7 +8,7 @@ import { useLocalStorage } from '@/lib/hooks/use-local-storage'
 import { useEffect, useState } from 'react'
 import { useUIState, useAIState } from 'ai/rsc'
 import { Session } from '@/lib/types'
-import { usePathname, useRouter } from 'next/navigation'
+import { redirect, usePathname, useRouter } from 'next/navigation'
 import { Message } from '@/lib/chat/actions'
 import { useScrollAnchor } from '@/lib/hooks/use-scroll-anchor'
 import { toast } from 'sonner'
@@ -34,6 +34,8 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
       if (!path.includes('chat') && messages.length === 1) {
         window.history.replaceState({}, '', `/chat/${id}`)
       }
+    }else{
+      redirect("/login")
     }
   }, [id, path, session?.user, messages])
 
