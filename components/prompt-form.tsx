@@ -17,19 +17,27 @@ import {
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit'
 import { nanoid } from 'nanoid'
 import { useRouter } from 'next/navigation'
+import { useScopeBook } from '@/lib/hooks/use-scope-book'
 
 export function PromptForm({
   input,
-  setInput
+  setInput,
+  scope
 }: {
   input: string
   setInput: (value: string) => void
+  scope: {
+    id: string
+    book: string
+  }
 }) {
   const router = useRouter()
   const { formRef, onKeyDown } = useEnterSubmit()
   const inputRef = React.useRef<HTMLTextAreaElement>(null)
   const { submitUserMessage } = useActions()
   const [_, setMessages] = useUIState<typeof AI>()
+
+
 
   React.useEffect(() => {
     if (inputRef.current) {
@@ -60,9 +68,9 @@ export function PromptForm({
             display: <UserMessage>{value}</UserMessage>
           }
         ])
-
+        console.log(scope)
         // Submit and get response message
-        const responseMessage = await submitUserMessage(value)
+        const responseMessage = await submitUserMessage({content: value, scope: scope})
         setMessages(currentMessages => [...currentMessages, responseMessage])
       }}
     >

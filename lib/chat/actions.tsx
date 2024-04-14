@@ -35,6 +35,7 @@ import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat } from '@/lib/types'
 import { auth } from '@/auth'
 import { MultipleChoiceQuiz } from '@/components/stocks/multiple-choice-questions'
+import { getContext } from './pineconeActions'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || ''
@@ -121,8 +122,11 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
   }
 }
 
-async function submitUserMessage(content: string) {
+async function submitUserMessage({content, scope}:{content: string, scope: {id:string, book: string}}) {
   'use server'
+
+  const contentWithContext = await getContext({prompt : content, page : "", scope: scope.id }) 
+  console.log('inside submitMessage', scope)
 
   const aiState = getMutableAIState<typeof AI>()
 
@@ -141,6 +145,7 @@ async function submitUserMessage(content: string) {
   let textStream: undefined | ReturnType<typeof createStreamableValue<string>>
   let textNode: undefined | React.ReactNode
 
+
   const ui = render({
     model: 'gpt-3.5-turbo',
     provider: openai,
@@ -149,20 +154,10 @@ async function submitUserMessage(content: string) {
       {
         role: 'system',
         content: `\
-You are a stock trading conversation bot and you can help students revise a particular topic, subjects and also
-provide a test of multiple choice questions.
-
-Messages inside [] means that it's a UI element or a user event. For example:
-- "[Price of AAPL = 100]" means that an interface of the stock price of AAPL is shown to the user.
-- "[User has changed the amount of AAPL to 10]" means that the user has changed the amount of AAPL to 10 in the UI.
+you're name is Dobu - ai study buddy. You will help answer any questions about ${scope.book}, Explain topics help them memorize, provide them different tricks that help user memorize the concepts better. Also provide easier explaination of the hard concept.
 
 If the user requests for revising a subject, all \`multipleChoiceQuestions\` to test their understanding of a subject matter.
-If the user just wants the price, call \`show_stock_price\` to show the price.
-If you want to show trending stocks, call \`list_stocks\`.
-If you want to show events, call \`get_events\`.
-If the user wants to sell stock, or complete another impossible task, respond that you are a demo and cannot do that.
-
-Besides that, you can also chat with users and do some calculations if needed.`
+`
       },
       ...aiState.get().messages.map((message: any) => ({
         role: message.role,

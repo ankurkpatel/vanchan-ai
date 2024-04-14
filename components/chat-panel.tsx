@@ -12,6 +12,7 @@ import type { AI } from '@/lib/chat/actions'
 import { nanoid } from 'nanoid'
 import { UserMessage } from './stocks/message'
 import { useChatWindow } from '@/lib/hooks/use-chat-window'
+import { string } from 'zod'
 
 export interface ChatPanelProps {
   id?: string
@@ -21,6 +22,7 @@ export interface ChatPanelProps {
   isAtBottom: boolean
   scrollToBottom: () => void
 }
+
 
 export function ChatPanel({
   id,
@@ -35,6 +37,7 @@ export function ChatPanel({
   const { submitUserMessage } = useActions()
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
   const {isChatWindowOpen} = useChatWindow()
+  const [selectedScope, setSelectedScope] = React.useState('')
 
   const exampleMessages = [
     {
@@ -132,7 +135,8 @@ export function ChatPanel({
             </div>
           </div>
         ) : null}
-          <PromptForm input={input} setInput={setInput} />
+          <PromptForm input={input} setInput={setInput} scope={selectedScope} />
+          <FooterText  setSelectScope ={setSelectedScope}/>
       </div>
     </div>
   )
