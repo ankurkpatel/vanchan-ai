@@ -30,7 +30,7 @@ export function EmptyScreen() {
           Struggling to grasp complex topics? Confused by difficult concepts?
         </p>
         <p className="leading-normal text-muted-foreground">
-          Ask me and I'll help you understand anything.
+          {`Ask me and I'll help you understand anything.`}
         </p> 
       </div>
     </div>

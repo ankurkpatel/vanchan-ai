@@ -1,5 +1,6 @@
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
+import {Inter} from 'next/font/google'
 
 import '@/app/globals.css'
 import { cn } from '@/lib/utils'

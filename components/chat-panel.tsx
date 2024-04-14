@@ -37,7 +37,7 @@ export function ChatPanel({
   const { submitUserMessage } = useActions()
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
   const {isChatWindowOpen} = useChatWindow()
-  const [selectedScope, setSelectedScope] = React.useState('')
+  const [selectedScope, setSelectedScope] = React.useState({book: '', id:''})
 
   const exampleMessages = [
     {

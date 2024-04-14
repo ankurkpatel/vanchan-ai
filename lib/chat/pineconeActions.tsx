@@ -1,4 +1,5 @@
 import 'server-only'
+
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import path from "path";
 import { Pinecone } from "@pinecone-database/pinecone";
@@ -35,38 +36,37 @@ const getVectorStore = async () => {
 
 
 
-const uploadPinecone = async ({bookDir}:{bookDir:string}) => {
-  'use server'
-  const directoryLoader = new DirectoryLoader(
-    (path.join(process.cwd(),`lib/chat/${bookDir}`)),
-    {
-      ".pdf": (path: string) => new PDFLoader(path),
-    }
-  );
+// const uploadPinecone = async ({bookDir}:{bookDir:string}) => {
+//   const directoryLoader = new DirectoryLoader(
+//     (path.join(process.cwd(),`lib/chat/${bookDir}`)),
+//     {
+//       ".pdf": (path: string) => new PDFLoader(path),
+//     }
+//   );
   
-  const docs = await directoryLoader.load();
-  const docId = nanoid();
-   console.log('started \n\n','bookid', '---', bookDir, '---', docId);
-  // console.log(process.cwd())
+//   const docs = await directoryLoader.load();
+//   const docId = nanoid();
+//    console.log('started \n\n','bookid', '---', bookDir, '---', docId);
+//   // console.log(process.cwd())
 
-  const splitter = new TokenTextSplitter({
-    encodingName: "cl100k_base",
-    chunkSize: 1500,
-    chunkOverlap: 200,
-  });
+//   const splitter = new TokenTextSplitter({
+//     encodingName: "cl100k_base",
+//     chunkSize: 1500,
+//     chunkOverlap: 200,
+//   });
  
 
-  docs.forEach(doc => {
-    doc.metadata['docId']= docId
-  });
-    await PineconeStore.fromDocuments(docs, new OpenAIEmbeddings(), {
-        pineconeIndex,
-        maxConcurrency: 5, 
-      });
+//   docs.forEach(doc => {
+//     doc.metadata['docId']= docId
+//   });
+//     await PineconeStore.fromDocuments(docs, new OpenAIEmbeddings(), {
+//         pineconeIndex,
+//         maxConcurrency: 5, 
+//       });
 
-    console.log('complete.')
+//     console.log('complete.')
 
-}
+// }
 
 // uploadPinecone({bookDir : '10Math'})
 // uploadPinecone({bookDir : '10sc'})
@@ -82,7 +82,6 @@ interface contextInput {
 
 const getContext = async ({prompt, page, scope}:contextInput) => {
 /* Search the vector DB independently with metadata filters */
-
 const vectorStore = await getVectorStore();
 console.log('scope',scope);
 const results = await vectorStore.similaritySearch(prompt, 5,{

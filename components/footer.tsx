@@ -15,7 +15,7 @@ import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover
 import { useScopeBook } from '@/lib/hooks/use-scope-book'
 
 
-export function FooterText({setSelectScope}) {
+export function FooterText({ setSelectScope }: { setSelectScope: React.Dispatch<React.SetStateAction<any>> }) {
 
   const { books, isShowSelection, selectedScope} = useScopeBook()
 
