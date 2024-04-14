@@ -6,7 +6,7 @@ import { getChat, getMissingKeys } from '@/app/actions'
 import { Chat } from '@/components/chat'
 import { AI } from '@/lib/chat/actions'
 import { Session } from '@/lib/types'
-
+import Reader from "@/components/reader"
 export interface ChatPageProps {
   params: {
     id: string
@@ -50,12 +50,13 @@ export default async function ChatPage({ params }: ChatPageProps) {
 
   return (
     <AI initialAIState={{ chatId: chat.id, messages: chat.messages }}>
-      <Chat
+      {/* <Chat
         id={chat.id}
         session={session}
         initialMessages={chat.messages}
         missingKeys={missingKeys}
-      />
+      /> */}
+      <Reader id={chat.id} session={session} initialMessages={chat.messages} missingKeys={missingKeys} />
     </AI>
   )
 }

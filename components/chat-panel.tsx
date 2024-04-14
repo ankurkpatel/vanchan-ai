@@ -63,7 +63,7 @@ export function ChatPanel({
   ]
 
   return (
-    <div className={`fixed ${isChatWindowOpen ? 'md:w-[calc(33.33%)]' : 'w-full inset-x-0'} bottom-0 bg-gradient-to-b from-muted/30 from-0% to-muted/30 to-50% 
+    <div className={`fixed ${isChatWindowOpen ? 'md:w-[calc(33.33%)] xs:w-full sm:w-full' : 'w-full inset-x-0'} bottom-0 bg-gradient-to-b from-muted/30 from-0% to-muted/30 to-50% 
     duration-300 ease-in-out animate-in dark:from-background/10 
     dark:from-10% dark:to-background/80 peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]`}>
       <ButtonScrollToBottom
@@ -135,8 +135,10 @@ export function ChatPanel({
             </div>
           </div>
         ) : null}
+              <div className="space-y-4 bg-background md:py-4 text-small">
           <PromptForm input={input} setInput={setInput} scope={selectedScope} />
           <FooterText  setSelectScope ={setSelectedScope}/>
+          </div>
       </div>
     </div>
   )

@@ -21,7 +21,7 @@ export const useScrollAnchor = () => {
     if (messagesRef.current) {
       if (isAtBottom && !isVisible) {
         messagesRef.current.scrollIntoView({
-          block: 'nearest'
+          block: 'end',
         })
       }
     }
@@ -56,6 +56,7 @@ export const useScrollAnchor = () => {
         entries => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
+              console.log('entry visibilityRef', entry)
               setIsVisible(true)
             } else {
               setIsVisible(false)
@@ -63,7 +64,7 @@ export const useScrollAnchor = () => {
           })
         },
         {
-          rootMargin: '0px 0px -150px 0px'
+          rootMargin: '0px 0px -120px 0px'
         }
       )
 

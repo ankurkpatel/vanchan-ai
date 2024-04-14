@@ -17,6 +17,13 @@ export function ButtonScrollToBottom({
   scrollToBottom,
   ...props
 }: ButtonScrollToBottomProps) {
+
+  React.useEffect(()=>{
+
+    console.log('isAtBottom Status(inside button) ->',isAtBottom)
+
+  })
+
   return (
     <Button
       variant="outline"

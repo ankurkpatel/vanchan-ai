@@ -4,7 +4,7 @@ import { Chat, ChatProps } from "./chat"
 
 
 
-const Reader = ({id, session, missingKeys} : ChatProps) => {
+const Reader = ({id, session, missingKeys, initialMessages} : ChatProps) => {
     const {isChatWindowOpen, toggleChatWindow} = useChatWindow()
 
     return (
@@ -13,7 +13,7 @@ const Reader = ({id, session, missingKeys} : ChatProps) => {
 
     </div>}
     <div className={`${isChatWindowOpen ? 'md:w-4/12' : ''} mx-auto overflow-auto w-full`}>
-    <Chat id={id} session={session} missingKeys={missingKeys} />
+    <Chat id={id} session={session} initialMessages={initialMessages} missingKeys={missingKeys} />
     </div>
     </div>
     )
