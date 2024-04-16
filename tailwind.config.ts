@@ -9,12 +9,6 @@ module.exports = {
   ],
   prefix: '',
   theme: {
-    font : {
-      sm:'0.5rem',
-      base:'1rem',
-      '2xl':'1.25rem'
-    },
-
     container: {
       center: true,
       padding: '2rem',
@@ -27,6 +21,12 @@ module.exports = {
         sans: ['var(--font-inter)'],
         mono: ['var(--font-geist-mono)']
       },
+       fontSize : {
+      xs: "0.75rem",
+      sm:'0.8rem',
+      base:'1rem',
+      '2xl':'1.25rem'
+    },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
