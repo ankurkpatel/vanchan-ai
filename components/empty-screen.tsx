@@ -1,8 +1,9 @@
 import { UseChatHelpers } from 'ai/react'
-
 import { Button } from '@/components/ui/button'
 import { ExternalLink } from '@/components/external-link'
 import { IconArrowRight } from '@/components/ui/icons'
+import { useScope } from '@/lib/hooks/use-scope'
+import { FooterText } from './footer'
 
 const exampleMessages = [
   {
@@ -19,7 +20,9 @@ const exampleMessages = [
   }
 ]
 
+
 export function EmptyScreen() {
+  const {scope, updateScope } = useScope()
   return (
     <div className="mx-auto max-w-2xl px-4">
       <div className="flex flex-col gap-2 rounded-lg border bg-background p-8">
@@ -32,6 +35,7 @@ export function EmptyScreen() {
         <p className="leading-normal text-muted-foreground">
           {`Ask me and I'll help you understand anything.`}
         </p> 
+        <FooterText setSelectScope={updateScope}/>
       </div>
     </div>
   )

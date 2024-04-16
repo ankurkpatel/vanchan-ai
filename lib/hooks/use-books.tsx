@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from 'react';
 
-export function useScopeBook() {
+export function useBooks() {
 
 interface Book {
     book: string;
@@ -16,20 +16,8 @@ const books = [
     {book:'std 10 Social Science', id: 'EsJO9Y0bOfQ1BpJStmpdH' }
 ]
       
-
-const [selectedScope, setSelectedScope] = useState<Book | undefined>();
-  const [isShowSelection, setIsShowSelection] = useState(true);
-
-  const handleScopeChange = (value: string) => {
-    const selectedBookObj = books.find(book => book.id === value);
-    setSelectedScope(selectedBookObj);
-    setIsShowSelection(false);
-    console.log(`Selected book: ${selectedBookObj?.book}`);
-  };
-
   return {
-    selectedScope,
-    books,
-    isShowSelection
+   
+    books
   };
 }

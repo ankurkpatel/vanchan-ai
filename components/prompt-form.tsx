@@ -17,27 +17,23 @@ import {
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit'
 import { nanoid } from 'nanoid'
 import { useRouter } from 'next/navigation'
-import { useScopeBook } from '@/lib/hooks/use-scope-book'
+import { useScopeBook } from '@/lib/hooks/use-books'
 import { toast } from 'sonner'
+import { useScope } from '@/lib/hooks/use-scope'
 
 export function PromptForm({
   input,
-  setInput,
-  scope
+  setInput
 }: {
   input: string
   setInput: (value: string) => void
-  scope: {
-    id: string
-    book: string
-  }
 }) {
   const router = useRouter()
   const { formRef, onKeyDown } = useEnterSubmit()
   const inputRef = React.useRef<HTMLTextAreaElement>(null)
   const { submitUserMessage } = useActions()
   const [_, setMessages] = useUIState<typeof AI>()
-
+  const {scope} = useScope()
 
 
   React.useEffect(() => {

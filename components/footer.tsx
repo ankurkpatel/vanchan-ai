@@ -12,12 +12,12 @@ import {
   SelectLabel
 } from "@/components/ui/select"
 import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover'
-import { useScopeBook } from '@/lib/hooks/use-scope-book'
+import { useBooks } from '@/lib/hooks/use-books'
 
 
 export function FooterText({ setSelectScope }: { setSelectScope: React.Dispatch<React.SetStateAction<any>> }) {
 
-  const { books} = useScopeBook()
+  const { books} = useBooks()
 
   const handleScopeChange = (value: string) => {
     const selectedBookObj = books.find(book => book.id === value);
