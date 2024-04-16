@@ -13,11 +13,13 @@ import {
 } from "@/components/ui/select"
 import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover'
 import { useBooks } from '@/lib/hooks/use-books'
+import { useScope } from '@/lib/hooks/use-scope'
 
 
 export function FooterText({ setSelectScope }: { setSelectScope: React.Dispatch<React.SetStateAction<any>> }) {
 
   const { books} = useBooks()
+  const {scope }= useScope()
 
   const handleScopeChange = (value: string) => {
     const selectedBookObj = books.find(book => book.id === value);
@@ -31,8 +33,8 @@ return (
 
     <Select  onValueChange={handleScopeChange}>
 
-        <SelectTrigger className="w-[150px] scale-70" defaultValue={`${books[0].book}`}>
-          <SelectValue placeholder={`${books[0].book}`}/>
+        <SelectTrigger className="w-[180px] scale-60" defaultValue={scope?.book ? scope.book :`${books[0].book}`}>
+          <SelectValue placeholder={`${scope?.book}`}/>
         </SelectTrigger>
         <SelectContent>
           {books.map(book => (

@@ -17,7 +17,6 @@ import {
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit'
 import { nanoid } from 'nanoid'
 import { useRouter } from 'next/navigation'
-import { useScopeBook } from '@/lib/hooks/use-books'
 import { toast } from 'sonner'
 import { useScope } from '@/lib/hooks/use-scope'
 
