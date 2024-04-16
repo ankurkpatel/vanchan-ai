@@ -22,7 +22,7 @@ interface ScopeProviderProps {
 }
 
 export function ScopeProvider({ children }: ScopeProviderProps) {
-  const [scope, setScope] = useState({book:'', id:''})
+  const [scope, setScope] = useState({ book: 'Std. 12 Biology', id: 'iCpboeqPDTZ-4njSCTe_9' })
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {

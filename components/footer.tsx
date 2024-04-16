@@ -33,7 +33,7 @@ return (
 
     <Select  onValueChange={handleScopeChange}>
 
-        <SelectTrigger className="w-[180px] scale-60" defaultValue={scope?.book ? scope.book :`${books[0].book}`}>
+        <SelectTrigger className="w-[180px] scale-60" defaultValue={scope?.book}>
           <SelectValue placeholder={`${scope?.book}`}/>
         </SelectTrigger>
         <SelectContent>
