@@ -25,18 +25,21 @@ export function FooterText({ setSelectScope }: { setSelectScope: React.Dispatch<
   };
 
 return (
-<div className='hover:cursor-pointer'>
+<div className='hover:cursor-pointer flex flex-shrink'>
 
-    <Select  onValueChange={handleScopeChange}>
+    <Select onValueChange={handleScopeChange}>
+
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="select a Book" />
+          <SelectValue placeholder="Select a Book" />
         </SelectTrigger>
         <SelectContent>
           {books.map(book => (
             <SelectItem key={book.id} value={book.id}>{book.book}</SelectItem>
           ))}
         </SelectContent>
+
       </Select>
+   
 </div>       
   )
 }
