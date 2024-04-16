@@ -27,11 +27,11 @@ export function FooterText({ setSelectScope }: { setSelectScope: React.Dispatch<
 
 
 return (
-<span className='hover:cursor-pointer'>
+<div className='hover:cursor-pointer'>
 
-    <Select onValueChange={handleScopeChange}>
+    <Select  onValueChange={handleScopeChange}>
 
-        <SelectTrigger className="w-[180px]" defaultValue={`${books[0].book}`}>
+        <SelectTrigger className="w-[150px] scale-70" defaultValue={`${books[0].book}`}>
           <SelectValue placeholder={`${books[0].book}`}/>
         </SelectTrigger>
         <SelectContent>
@@ -41,6 +41,6 @@ return (
         </SelectContent>
       </Select>
    
-</span>       
+</div>       
   )
 }
