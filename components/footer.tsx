@@ -17,20 +17,22 @@ import { useScopeBook } from '@/lib/hooks/use-scope-book'
 
 export function FooterText({ setSelectScope }: { setSelectScope: React.Dispatch<React.SetStateAction<any>> }) {
 
-  const { books, isShowSelection, selectedScope} = useScopeBook()
+  const { books} = useScopeBook()
 
   const handleScopeChange = (value: string) => {
     const selectedBookObj = books.find(book => book.id === value);
     setSelectScope(selectedBookObj);
   };
 
+
+
 return (
 <div className='hover:cursor-pointer flex flex-shrink'>
 
     <Select onValueChange={handleScopeChange}>
 
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select a Book" />
+        <SelectTrigger className="w-[180px]" defaultValue={`${books[0].book}`}>
+          <SelectValue placeholder={`${books[0].book}`}/>
         </SelectTrigger>
         <SelectContent>
           {books.map(book => (

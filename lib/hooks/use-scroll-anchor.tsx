@@ -56,7 +56,6 @@ export const useScrollAnchor = () => {
         entries => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              console.log('entry visibilityRef', entry)
               setIsVisible(true)
             } else {
               setIsVisible(false)

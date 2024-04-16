@@ -46,16 +46,16 @@ export function ChatPanel({
       subheading: '$DOGE right now?',
       message: 'What is the price of $DOGE right now?'
     },
-    {
-      heading: 'I would like to buy',
-      subheading: '42 $DOGE',
-      message: `I would like to buy 42 $DOGE`
-    },
-    {
-      heading: 'What are some',
-      subheading: `recent events about $DOGE?`,
-      message: `What are some recent events about $DOGE?`
-    }
+    // {
+    //   heading: 'I would like to buy',
+    //   subheading: '42 $DOGE',
+    //   message: `I would like to buy 42 $DOGE`
+    // },
+    // {
+    //   heading: 'What are some',
+    //   subheading: `recent events about $DOGE?`,
+    //   message: `What are some recent events about $DOGE?`
+    // }
   ]
 
   return (
@@ -71,7 +71,7 @@ export function ChatPanel({
             exampleMessages.map((example, index) => (
               <div
                 key={example.heading}
-                className={`cursor-pointer rounded-lg border bg-white p-4 hover:bg-zinc-50 dark:bg-zinc-950 dark:hover:bg-zinc-900 ${
+                className={`cursor-pointer rounded-lg border p-4 bg-background hover:bg-zinc-50 dark:bg-zinc-950 dark:hover:bg-zinc-900 ${
                   index > 1 && 'hidden md:block'
                 }`}
                 onClick={async () => {
@@ -130,9 +130,9 @@ export function ChatPanel({
           </div>
         ) : null}
 
-        <div className="space-y-4 border-t bg-muted/50 px-4 py-2 shadow-lg sm:rounded-t-xl sm:border md:py-4">
+        <div className="space-y-4 bg-background border mb-2 px-4 py-2 shadow-lg sm:rounded-xl sm:border md:py-4">
+        <FooterText  setSelectScope ={setSelectedScope}/>
           <PromptForm input={input} setInput={setInput} scope={selectedScope} />
-          <FooterText  setSelectScope ={setSelectedScope}/>
           </div>
       </div>
     </div>

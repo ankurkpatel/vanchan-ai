@@ -18,6 +18,7 @@ import { useEnterSubmit } from '@/lib/hooks/use-enter-submit'
 import { nanoid } from 'nanoid'
 import { useRouter } from 'next/navigation'
 import { useScopeBook } from '@/lib/hooks/use-scope-book'
+import { toast } from 'sonner'
 
 export function PromptForm({
   input,
@@ -43,6 +44,7 @@ export function PromptForm({
     if (inputRef.current) {
       inputRef.current.focus()
     }
+
   }, [])
 
   return (
@@ -59,6 +61,9 @@ export function PromptForm({
         const value = input.trim()
         setInput('')
         if (!value) return
+
+        if(!scope.book)
+        toast.error('Please select a book')
 
         // Optimistically add user message UI
         setMessages(currentMessages => [

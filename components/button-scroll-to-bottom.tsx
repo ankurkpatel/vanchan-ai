@@ -18,11 +18,11 @@ export function ButtonScrollToBottom({
   ...props
 }: ButtonScrollToBottomProps) {
 
-  React.useEffect(()=>{
+  // React.useEffect(()=>{
 
-    console.log('isAtBottom Status(inside button) ->',isAtBottom)
+  //   console.log('isAtBottom Status(inside button) ->',isAtBottom)
 
-  })
+  // })
 
   return (
     <Button
