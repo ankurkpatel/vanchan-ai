@@ -26,6 +26,7 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
   const [input, setInput] = useState('')
   const [messages] = useUIState()
   const [aiState] = useAIState()
+ 
 
   const [_, setNewChatId] = useLocalStorage('newChatId', id)
 
@@ -81,6 +82,7 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
       setInput={setInput}
       isAtBottom={isAtBottom}
       scrollToBottom={scrollToBottom}
+      
     />
   </div>
   )

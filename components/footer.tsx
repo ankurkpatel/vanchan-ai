@@ -27,7 +27,7 @@ export function FooterText({ setSelectScope }: { setSelectScope: React.Dispatch<
 
 
 return (
-<div className='hover:cursor-pointer flex flex-shrink'>
+<span className='hover:cursor-pointer'>
 
     <Select onValueChange={handleScopeChange}>
 
@@ -39,9 +39,8 @@ return (
             <SelectItem key={book.id} value={book.id}>{book.book}</SelectItem>
           ))}
         </SelectContent>
-
       </Select>
    
-</div>       
+</span>       
   )
 }

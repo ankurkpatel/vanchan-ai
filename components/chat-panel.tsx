@@ -130,8 +130,8 @@ export function ChatPanel({
           </div>
         ) : null}
 
-        <div className="space-y-4 bg-background border mb-2 px-4 py-2 shadow-lg sm:rounded-xl sm:border md:py-4">
-        <FooterText  setSelectScope ={setSelectedScope}/>
+        <div className="space-y-4 bg-background md:border mb-2 px-4 py-2 shadow-lg sm:rounded-xl sm:border-t md:py-4">
+          <FooterText setSelectScope={setSelectedScope} />
           <PromptForm input={input} setInput={setInput} scope={selectedScope} />
           </div>
       </div>
