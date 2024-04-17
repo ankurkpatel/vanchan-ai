@@ -11,6 +11,7 @@ import { useAIState, useActions, useUIState } from 'ai/rsc'
 import type { AI } from '@/lib/chat/actions'
 import { nanoid } from 'nanoid'
 import { UserMessage } from './stocks/message'
+import { useScope } from '@/lib/hooks/use-scope'
 
 export interface ChatPanelProps {
   id?: string
@@ -33,18 +34,19 @@ export function ChatPanel({
   const [messages, setMessages] = useUIState<typeof AI>()
   const { submitUserMessage } = useActions()
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
+  const {scope} = useScope()
  
 
   const exampleMessages = [
     {
-      heading: 'What are the',
-      subheading: 'trending memecoins today?',
-      message: `What are the trending memecoins today?`
+      
+      subheading: 'Explain Replication of retrovirus.',
+      message: `Explain Replication of retrovirus.`
     },
     {
-      heading: 'What is the price of',
-      subheading: '$DOGE right now?',
-      message: 'What is the price of $DOGE right now?'
+      
+      subheading: 'What is Speciation?',
+      message: 'What is Speciation?'
     },
     // {
     //   heading: 'I would like to buy',
@@ -70,7 +72,7 @@ export function ChatPanel({
           {messages.length === 0 &&
             exampleMessages.map((example, index) => (
               <div
-                key={example.heading}
+                key={example.subheading}
                 className={`cursor-pointer rounded-lg border p-4 bg-background hover:bg-zinc-50 dark:bg-zinc-950 dark:hover:bg-zinc-900 ${
                   index > 1 && 'hidden md:block'
                 }`}
@@ -84,7 +86,9 @@ export function ChatPanel({
                   ])
 
                   const responseMessage = await submitUserMessage(
-                    example.message
+                    {content: example.message,
+                    scope : scope
+                    }
                   )
 
                   setMessages(currentMessages => [
@@ -93,10 +97,10 @@ export function ChatPanel({
                   ])
                 }}
               >
-                <div className="text-sm font-semibold">{example.heading}</div>
-                <div className="text-sm text-zinc-600">
+                <div className="text-xs sm:text-sm text-zinc-500 font-semibold">{example.subheading}</div>
+                {/* <div className="text-xs sm:text-sm text-zinc-600">
                   {example.subheading}
-                </div>
+                </div> */}
               </div>
             ))}
         </div>
