@@ -5,21 +5,6 @@ import { IconArrowRight } from '@/components/ui/icons'
 import { useScope } from '@/lib/hooks/use-scope'
 import { FooterText } from './footer'
 
-const exampleMessages = [
-  {
-    heading: 'Explain technical concepts',
-    message: `What is a "serverless function"?`
-  },
-  {
-    heading: 'Summarize an article',
-    message: 'Summarize the following article for a 2nd grader: \n'
-  },
-  {
-    heading: 'Draft an email',
-    message: `Draft an email to my boss about the following: \n`
-  }
-]
-
 
 export function EmptyScreen() {
   const {scope, updateScope } = useScope()
