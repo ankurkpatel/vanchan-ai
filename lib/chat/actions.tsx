@@ -468,29 +468,42 @@ export const getUIStateFromAIState = (aiState: Chat) => {
     .filter(message => message.role !== 'system')
     .map((message, index) => ({
       id: `${aiState.chatId}-${index}`,
-      display:
-        message.role === 'function' ? (
-          message.name === 'multipleChoiceQuestions' ? (
-            <BotCard>
-              <MultipleChoiceQuiz questions={JSON.parse(message.content).questions} />
-            </BotCard>
-          ) : message.name === 'showStockPrice' ? (
-            <BotCard>
-              <Stock props={JSON.parse(message.content)} />
-            </BotCard>
-          ) : message.name === 'showStockPurchase' ? (
-            <BotCard>
-              <Purchase props={JSON.parse(message.content)} />
-            </BotCard>
-          ) : message.name === 'getEvents' ? (
-            <BotCard>
-              <Events props={JSON.parse(message.content)} />
-            </BotCard>
-          ) : null
-        ) : message.role === 'user' ? (
-          <UserMessage>{message.content}</UserMessage>
-        ) : (
-          <BotMessage content={message.content} />
-        )
-    }))
-}
+      display: (() => {
+        switch (message.role) {
+          case 'function':
+            switch (message.name) {
+              case 'multipleChoiceQuestions':
+                return (
+                  <BotCard>
+                    <MultipleChoiceQuiz questions={JSON.parse(message.content).questions} />
+                  </BotCard>
+                );
+              case 'showStockPrice':
+                return (
+                  <BotCard>
+                    <Stock props={JSON.parse(message.content)} />
+                  </BotCard>
+                );
+              case 'showStockPurchase':
+                return (
+                  <BotCard>
+                    <Purchase props={JSON.parse(message.content)} />
+                  </BotCard>
+                );
+              case 'getEvents':
+                return (
+                  <BotCard>
+                    <Events props={JSON.parse(message.content)} />
+                  </BotCard>
+                );
+              default:
+                return null;
+            }
+          case 'user':
+            return <UserMessage>{message.content}</UserMessage>;
+          default:
+            return <BotMessage content={message.content} />;
+        }
+      })()
+    }));
+};

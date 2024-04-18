@@ -1,8 +1,11 @@
+'use client'
 import { Separator } from '@/components/ui/separator'
 import { UIState } from '@/lib/chat/actions'
 import { Session } from '@/lib/types'
 import Link from 'next/link'
+import { SpinnerMessage } from './stocks/message'
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
+import { Suspense } from 'react'
 
 export interface ChatList {
   messages: UIState
@@ -43,7 +46,10 @@ export function ChatList({ messages, session, isShared }: ChatList) {
 
       {messages.map((message, index) => (
         <div key={message.id}>
+          <Suspense fallback={<SpinnerMessage />}>
           {message.display}
+      </Suspense>
+          
           {index < messages.length - 1 && <Separator className="my-4" />}
         </div>
       ))}
