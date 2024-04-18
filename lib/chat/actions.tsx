@@ -125,8 +125,10 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
 async function submitUserMessage({content, scope}:{content: string, scope: {id:string, book: string}}) {
   'use server'
 
-  const contentWithContext = await getContext({prompt : content, page : "", scope: scope.id }) 
-  console.log('inside submitMessage', scope)
+  // const contentWithContext = await getContext({prompt : content, page : "", scope: scope.id }) 
+  // console.log('inside submitMessage', scope)
+
+  const contentWithContext = content
 
   const aiState = getMutableAIState<typeof AI>()
 
