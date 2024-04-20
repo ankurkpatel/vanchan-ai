@@ -37,6 +37,7 @@ export function BotMessage({
   content: string | StreamableValue<string>
   className?: string
 }) {
+ 
   const text = useStreamableText(content)
 
   return (
