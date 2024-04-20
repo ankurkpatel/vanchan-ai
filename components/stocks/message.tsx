@@ -42,7 +42,8 @@ export function BotMessage({
 
   return (
     <div className={cn('group relative flex flex-col sm:flex-row items-start md:-ml-12', className)}>
-      <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow-sm scale-75 sm:grey-5000">
+      <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground 
+      shadow-sm scale-75 sm:scale-100 sm:grey-5000">
         <IconOpenAI />
       </div>
       {/* {!text && spinner} */}

@@ -20,10 +20,8 @@ import {
 } from '@/components/stocks'
 
 import { z } from 'zod'
-import { EventsSkeleton } from '@/components/stocks/events-skeleton'
 import { Events } from '@/components/stocks'
 import { StocksSkeleton } from '@/components/stocks/stocks-skeleton'
-import { Stocks } from '@/components/stocks'
 import {
   formatNumber,
   runAsyncFnWithoutBlocking,
@@ -282,7 +280,7 @@ your response should be broken down into smaller chunks such that it understand 
         render : async function* ({contentUpdated}){
           console.log(contentUpdated)
           let textStreamT = createStreamableValue('')
-          let textNodeT =<BotMessage content={textStreamT.value} /> 
+          let textNodeT =<BotMessage content={textStreamT.value} />
 
           yield(textNodeT)
 
