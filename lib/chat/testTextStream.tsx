@@ -9,6 +9,7 @@ const openai = new OpenAI({
 
 export async function getOpneAIText({content, history}:{ content: string, history:{}} ):Promise<ReadableStreamDefaultReader> {
 
+  console.log('console content updated \n',content)
   const response = await openai.chat.completions.create({
     model: 'gpt-4',
     stream: true,

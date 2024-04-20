@@ -273,7 +273,7 @@ your response should be broken down into smaller chunks such that it understand 
         }
       },
       showAnswerBasedOnContext:{
-        description :'Explain any topics from the book, contentUpdated will be used to search in the book in vectorstore.',
+        description :'Explain any topics from the book',
         parameters : z.object({
         contentUpdated : z.string()  
         }),
@@ -284,7 +284,7 @@ your response should be broken down into smaller chunks such that it understand 
 
           yield(textNodeT)
 
-          const contentWithContext = await getContext({prompt : contentUpdated, page : "", scope: scope.id })
+          const contentWithContext = await getContext({prompt : content, page : "", scope: scope.id })
           
            
           const reader= await getOpneAIText({content: contentWithContext, history: {} })

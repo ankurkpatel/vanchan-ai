@@ -83,7 +83,7 @@ interface contextInput {
 const getContext = async ({prompt, page, scope}:contextInput) => {
 /* Search the vector DB independently with metadata filters */
 const vectorStore = await getVectorStore();
-console.log('scope',scope);
+// console.log('scope',scope);
 const results = await vectorStore.similaritySearch(prompt, 5,{
 docId : scope
 });
