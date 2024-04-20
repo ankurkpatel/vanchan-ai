@@ -42,9 +42,6 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || ''
 })
 
-export const config = {
-  maxDuration: 30,
-};
 
 async function confirmPurchase(symbol: string, price: number, amount: number) {
   'use server'

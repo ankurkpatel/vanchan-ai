@@ -9,11 +9,13 @@ import Reader from "@/components/reader"
 export const metadata = {
   title: 'Next.js AI Chatbot'
 }
+export const maxDuration = 60
 
 export default async function IndexPage() {
   const id = nanoid()
   const session = (await auth()) as Session
   const missingKeys = await getMissingKeys()
+ 
 
   return (
     <AI initialAIState={{ chatId: id, messages: [] }}>
