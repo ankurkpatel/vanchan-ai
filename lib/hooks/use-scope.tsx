@@ -8,8 +8,10 @@ interface ScopeContext {
   scope: {
     id: string
     book: string
-  }
+  },
+  isShowScopeOptions : boolean
   updateScope: (bookObj: { book: string; id: string }) => void
+  setIsShowScopeOptionsStatus : (status: boolean) => void
   isLoading: boolean
 }
 
@@ -23,20 +25,29 @@ interface ScopeProviderProps {
 
 export function ScopeProvider({ children }: ScopeProviderProps) {
   const [scope, setScope] = useState({ book: 'Std. 12 Biology', id: 'iCpboeqPDTZ-4njSCTe_9' })
+  const [isShowScopeOptions, setIsShowScopeOptions ] = useState(false)
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
     const value = localStorage.getItem(LOCAL_STORAGE_KEY)
     if (value) {
-        setScope(JSON.parse(value))
+        console.log(JSON.parse(value))
+        setScope(JSON.parse(value).bookObj)
+        setIsShowScopeOptions(JSON.parse(value).isShowScopeOptions)
     }
     setLoading(false)
   }, [])
 
   const updateScope =(bookObj:{book:string, id:string})=> {
     
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(bookObj))
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({bookObj,isShowScopeOptions: isShowScopeOptions}))
     setScope(bookObj)
+
+  }
+
+  const setIsShowScopeOptionsStatus =(status: boolean)=>{
+
+    setIsShowScopeOptions(status)
 
   }
   
@@ -47,7 +58,7 @@ export function ScopeProvider({ children }: ScopeProviderProps) {
 
   return (
     <ScopeContext.Provider
-      value={{ scope, updateScope, isLoading }}
+      value={{ scope, updateScope, isLoading, setIsShowScopeOptionsStatus, isShowScopeOptions }}
     >
       {children}
     </ScopeContext.Provider>

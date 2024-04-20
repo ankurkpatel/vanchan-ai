@@ -125,10 +125,10 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
 async function submitUserMessage({content, scope}:{content: string, scope: {id:string, book: string}}) {
   'use server'
 
-  // const contentWithContext = await getContext({prompt : content, page : "", scope: scope.id }) 
+  const contentWithContext = await getContext({prompt : content, page : "", scope: scope.id }) 
   // console.log('inside submitMessage', scope)
 
-  const contentWithContext = content
+  // const contentWithContext = content
 
   const aiState = getMutableAIState<typeof AI>()
 
@@ -147,7 +147,7 @@ async function submitUserMessage({content, scope}:{content: string, scope: {id:s
   let textStream: undefined | ReturnType<typeof createStreamableValue<string>>
   let textNode: undefined | React.ReactNode
 
-
+  
   const ui = render({
     model: 'gpt-3.5-turbo',
     provider: openai,
@@ -161,11 +161,14 @@ you're name is Dobu - ai study buddy. You will help answer any questions about $
 If the user requests for revising a subject, all \`multipleChoiceQuestions\` to test their understanding of a subject matter.
 `
       },
-      ...aiState.get().messages.map((message: any) => ({
+      ...aiState.get().messages.slice(0,-1).map((message: any) => ({
         role: message.role,
         content: message.content,
         name: message.name
-      }))
+      })),
+      ...aiState.get().messages.slice(-1).map((message) => ({role: message.role,
+        content: contentWithContext ,
+        name: message.name}))
     ],
     text: ({ content, done, delta }) => {
       if (!textStream) {
@@ -216,8 +219,6 @@ If the user requests for revising a subject, all \`multipleChoiceQuestions\` to 
               <StocksSkeleton />
             </BotCard>
           )
-
-          await sleep(1000)
 
           aiState.done({
             ...aiState.get(),
