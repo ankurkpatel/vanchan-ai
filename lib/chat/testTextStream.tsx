@@ -6,10 +6,9 @@ import { getAIState, getMutableAIState } from 'ai/rsc';
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || '',
 });
- 
-// IMPORTANT! Set the runtime to edge
-export const runtime = 'edge';
- 
+export const config = {
+  maxDuration: 30,
+};
 export async function getOpneAIText({content, history}:{ content: string, history:{}} ):Promise<ReadableStreamDefaultReader> {
 
   const response = await openai.chat.completions.create({
