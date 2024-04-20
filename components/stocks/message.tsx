@@ -45,6 +45,7 @@ export function BotMessage({
       <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow-sm scale-75 sm:grey-5000">
         <IconOpenAI />
       </div>
+      {/* {!text && spinner} */}
       <div className="sm:ml-4 mt-3 sm:mt-0 flex-1 space-y-2 overflow-hidden px-1 ">
         <MemoizedReactMarkdown
           className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 text-sm sm:text-base"

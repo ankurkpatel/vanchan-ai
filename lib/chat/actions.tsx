@@ -154,7 +154,7 @@ async function submitUserMessage({
   let textNode: undefined | React.ReactNode
 
   const ui = render({
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-4',
     provider: openai,
     initial: <SpinnerMessage />,
     messages: [
@@ -163,12 +163,17 @@ async function submitUserMessage({
         content: `\
 you're name is Dobu - ai study buddy. You will help answer any questions about ${scope.book}, Explain topics help them memorize, provide them different tricks that help user memorize the concepts better. Also provide easier explaination of the hard concept.
 
-If the user requests for revising a subject, all \`multipleChoiceQuestions\` to test their understanding of a subject matter.
+always use function : showAnswerBasedOnContext
+
+your response should be broken down into smaller chunks such that it understand by user, doesn't overwhelm student who trying to learn first time. That is why import keep it short. Ask if they follow and then only explain further.
+
+
+
 `
       },
       ...aiState
         .get()
-        .messages.slice(0, -1)
+        .messages.slice(-2, -1)
         .map((message: any) => ({
           role: message.role,
           content: message.content,
@@ -269,11 +274,12 @@ If the user requests for revising a subject, all \`multipleChoiceQuestions\` to 
         }
       },
       showAnswerBasedOnContext:{
-        description :'find answer in the book, provide updated query to search vectorStore',
+        description :'Explain any topics from the book, contentUpdated will be used to search in the book in vectorstore.',
         parameters : z.object({
         contentUpdated : z.string()  
         }),
         render : async function* ({contentUpdated}){
+          console.log(contentUpdated)
           let textStreamT = createStreamableValue('')
           let textNodeT =<BotMessage content={textStreamT.value} /> 
 
@@ -281,9 +287,8 @@ If the user requests for revising a subject, all \`multipleChoiceQuestions\` to 
 
           const contentWithContext = await getContext({prompt : contentUpdated, page : "", scope: scope.id })
           
-         
            
-          const reader= await getOpneAIText(contentWithContext)
+          const reader= await getOpneAIText({content: contentWithContext, history: {} })
 
 
           let concatedResponse: string  = ''
@@ -321,154 +326,6 @@ If the user requests for revising a subject, all \`multipleChoiceQuestions\` to 
         }
 
       },
-      showStockPrice: {
-        description:
-          'Get the current stock price of a given stock or currency. Use this to show the price to the user.',
-        parameters: z.object({
-          symbol: z
-            .string()
-            .describe(
-              'The name or symbol of the stock or currency. e.g. DOGE/AAPL/USD.'
-            ),
-          price: z.number().describe('The price of the stock.'),
-          delta: z.number().describe('The change in price of the stock')
-        }),
-        render: async function* ({ symbol, price, delta }) {
-          yield (
-            <BotCard>
-              <StocksSkeleton />
-            </BotCard>
-          )
-
-          await sleep(1000)
-
-          aiState.done({
-            ...aiState.get(),
-            messages: [
-              ...aiState.get().messages,
-              {
-                id: nanoid(),
-                role: 'function',
-                name: 'showStockPrice',
-                content: JSON.stringify({ symbol, price, delta })
-              }
-            ]
-          })
-
-          return (
-            <BotCard>
-              <Stock props={{ symbol, price, delta }} />
-            </BotCard>
-          )
-        }
-      },
-      showStockPurchase: {
-        description:
-          'Show price and the UI to purchase a stock or currency. Use this if the user wants to purchase a stock or currency.',
-        parameters: z.object({
-          symbol: z
-            .string()
-            .describe(
-              'The name or symbol of the stock or currency. e.g. DOGE/AAPL/USD.'
-            ),
-          price: z.number().describe('The price of the stock.'),
-          numberOfShares: z
-            .number()
-            .describe(
-              'The **number of shares** for a stock or currency to purchase. Can be optional if the user did not specify it.'
-            )
-        }),
-        render: async function* ({ symbol, price, numberOfShares = 100 }) {
-          if (numberOfShares <= 0 || numberOfShares > 1000) {
-            aiState.done({
-              ...aiState.get(),
-              messages: [
-                ...aiState.get().messages,
-                {
-                  id: nanoid(),
-                  role: 'system',
-                  content: `[User has selected an invalid amount]`
-                }
-              ]
-            })
-
-            return <BotMessage content={'Invalid amount'} />
-          }
-
-          aiState.done({
-            ...aiState.get(),
-            messages: [
-              ...aiState.get().messages,
-              {
-                id: nanoid(),
-                role: 'function',
-                name: 'showStockPurchase',
-                content: JSON.stringify({
-                  symbol,
-                  price,
-                  numberOfShares
-                })
-              }
-            ]
-          })
-
-          return (
-            <BotCard>
-              <Purchase
-                props={{
-                  numberOfShares,
-                  symbol,
-                  price: +price,
-                  status: 'requires_action'
-                }}
-              />
-            </BotCard>
-          )
-        }
-      },
-      getEvents: {
-        description:
-          'List funny imaginary events between user highlighted dates that describe stock activity.',
-        parameters: z.object({
-          events: z.array(
-            z.object({
-              date: z
-                .string()
-                .describe('The date of the event, in ISO-8601 format'),
-              headline: z.string().describe('The headline of the event'),
-              description: z.string().describe('The description of the event')
-            })
-          )
-        }),
-        render: async function* ({ events }) {
-          yield (
-            <BotCard>
-              <EventsSkeleton />
-            </BotCard>
-          )
-
-          await sleep(1000)
-
-          aiState.done({
-            ...aiState.get(),
-            messages: [
-              ...aiState.get().messages,
-              {
-                id: nanoid(),
-                role: 'function',
-                name: 'getEvents',
-                content: JSON.stringify(events)
-              }
-            ]
-          })
-
-          return (
-            <BotCard>
-              <Events props={events} />
-            </BotCard>
-          )
-        }
-      }
     }
   })
 

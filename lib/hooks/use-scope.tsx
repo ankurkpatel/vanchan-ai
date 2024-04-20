@@ -31,9 +31,11 @@ export function ScopeProvider({ children }: ScopeProviderProps) {
   useEffect(() => {
     const value = localStorage.getItem(LOCAL_STORAGE_KEY)
     if (value) {
-        console.log(JSON.parse(value))
+    
         setScope(JSON.parse(value).bookObj)
         setIsShowScopeOptions(JSON.parse(value).isShowScopeOptions)
+    }else{
+      setScope({ book: 'Std. 12 Biology', id: 'iCpboeqPDTZ-4njSCTe_9' })
     }
     setLoading(false)
   }, [])
