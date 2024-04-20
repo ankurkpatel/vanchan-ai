@@ -134,7 +134,7 @@ export function ChatPanel({
           </div>
         ) : null}
 
-        <div className="space-y-4 py-4 md:py-4 px-2 sm:px-0 bg-muted/90">
+        <div className="space-y-4 py-2 md:py-4 px-2 sm:px-0 bg-muted/90">
           <PromptForm input={input} setInput={setInput} />
           </div>
       </div>
