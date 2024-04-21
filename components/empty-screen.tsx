@@ -18,9 +18,9 @@ export function EmptyScreen() {
         {/* <p className="leading-snug sm:leading-normal text-muted-foreground text-sm sm:text-base">
           Struggling to grasp complex topics? Confused by difficult concepts?
         </p> */}
-        <p className="leading-normal mt-3 sm:leading-normal text-muted-foreground text-sm sm:text-base">
+        <div className="leading-normal mt-3 sm:leading-normal text-muted-foreground text-sm sm:text-base">
         { isShowScopeOptions ? <FooterText setSelectScope={updateScope}/> : <TextTypingEffectWithTextsFadeOut/>}
-        </p>
+        </div>
 
        
       </div>

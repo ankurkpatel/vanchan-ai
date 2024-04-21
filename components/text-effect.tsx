@@ -29,8 +29,8 @@ const useTypingEffect = (
 
 const texts = [
   'Struggling to grasp complex topics?',
-  'Confused by difficult concepts?',
-  "Ask me anything, I'll help your understand",
+  'Confused by any difficult concepts?',
+  "Ask me anything, I'll help you understand",
   "Step by step",
   "Let's go, Select a book below to start",
 
@@ -42,7 +42,7 @@ type TextTypingEffectProps = {
   duration?: number
 };
 const TIME_TO_FADE = 300;
-const TIME_INTERVAL = 4000;
+const TIME_INTERVAL = 3000;
 const TIME_PER_LETTER = 150;
 
 

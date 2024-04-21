@@ -26,6 +26,11 @@ export function FooterText({ setSelectScope }: { setSelectScope: React.Dispatch<
     setSelectScope(selectedBookObj);
   };
 
+  useEffect(() => {
+   console.log('reload scope')
+  }, [scope])
+  
+
 
 
 return (
@@ -34,7 +39,7 @@ return (
     <Select  onValueChange={handleScopeChange}>
 
         <SelectTrigger className="w-[180px] scale-60" defaultValue={scope?.book}>
-          <SelectValue placeholder={`${scope?.book}`}/>
+          <SelectValue placeholder={`${scope.book ? 'Select a Book': scope?.book}`}/>
         </SelectTrigger>
         <SelectContent>
           {books.map(book => (

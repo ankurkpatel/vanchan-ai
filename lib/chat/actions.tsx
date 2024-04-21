@@ -278,17 +278,20 @@ your response should be broken down into smaller chunks such that it understand 
         contentUpdated : z.string().describe('summarized version of prompt which includes sufficient history in english')  
         }),
         render : async function* ({contentUpdated}){
-          console.log(contentUpdated)
+         
           let textStreamT = createStreamableValue('')
           let textNodeT =<BotMessage content={textStreamT.value} />
-
           yield(textNodeT)
+          
+          yield(<SpinnerMessage/>)
 
           const contentWithContext = await getContext({prompt : contentUpdated, page : "", scope: scope.id })
           
+         
            
           const reader= await getOpneAIText({content: contentWithContext, history: {} })
 
+          yield(textNodeT)
 
           let concatedResponse: string  = ''
 
