@@ -52,7 +52,7 @@ async function UserOrLogin() {
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between w-full h-16 px-4  shrink-0  bg-muted/90 ">
+    <header className="sticky top-0 z-50 flex items-center justify-between w-full h-16 px-4  shrink-0 bg-[#F9F9FA] dark:bg-[#18181A] ">
         <React.Suspense fallback={<div className="flex-1 overflow-auto" />}>
         <UserOrLogin/>
         </React.Suspense>
