@@ -80,7 +80,7 @@ export function PromptForm({
             <Button
               variant="outline"
               size="icon"
-              className="absolute left-0 top-[14px] size-8 rounded-full bg-background p-0 sm:left-4"
+              className="absolute left-1 top-[14px] size-8 rounded-full bg-background p-0 sm:left-4 scale-75 sm:scale-100"
               onClick={() => {
                 router.push('/new')
               }}
@@ -106,7 +106,7 @@ export function PromptForm({
           value={input}
           onChange={e => setInput(e.target.value)}
         />
-        <div className="absolute right-0 top-[13px] sm:right-4">
+        <div className="absolute right-1 top-[13px] sm:right-4 scale-75 sm:scale-100">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button type="submit" size="icon" disabled={input === ''} className='rounded-full'>

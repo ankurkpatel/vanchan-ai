@@ -273,9 +273,9 @@ your response should be broken down into smaller chunks such that it understand 
         }
       },
       showAnswerBasedOnContext:{
-        description :'Explain any topics from the book.Based on history and current prompt, provide summarized question with sufficient history',
+        description :'Explain any topics from the book.Based on history and current prompt, provide summarized question with sufficient history in english',
         parameters : z.object({
-        contentUpdated : z.string().describe('summarized version of prompt which includes sufficient history')  
+        contentUpdated : z.string().describe('summarized version of prompt which includes sufficient history in english')  
         }),
         render : async function* ({contentUpdated}){
           console.log(contentUpdated)
