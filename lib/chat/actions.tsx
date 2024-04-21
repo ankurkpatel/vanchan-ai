@@ -172,7 +172,7 @@ your response should be broken down into smaller chunks such that it understand 
       },
       ...aiState
         .get()
-        .messages.slice(-2, -1)
+        .messages.slice(0, -1)
         .map((message: any) => ({
           role: message.role,
           content: message.content,
@@ -273,9 +273,9 @@ your response should be broken down into smaller chunks such that it understand 
         }
       },
       showAnswerBasedOnContext:{
-        description :'Explain any topics from the book',
+        description :'Explain any topics from the book.Based on history and current prompt, provide summarized question with sufficient history',
         parameters : z.object({
-        contentUpdated : z.string()  
+        contentUpdated : z.string().describe('summarized version of prompt which includes sufficient history')  
         }),
         render : async function* ({contentUpdated}){
           console.log(contentUpdated)
@@ -284,7 +284,7 @@ your response should be broken down into smaller chunks such that it understand 
 
           yield(textNodeT)
 
-          const contentWithContext = await getContext({prompt : content, page : "", scope: scope.id })
+          const contentWithContext = await getContext({prompt : contentUpdated, page : "", scope: scope.id })
           
            
           const reader= await getOpneAIText({content: contentWithContext, history: {} })
