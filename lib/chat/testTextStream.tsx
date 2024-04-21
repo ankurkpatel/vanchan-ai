@@ -40,6 +40,8 @@ const stream1 = await anthropic.messages.create({
   max_tokens: 3000,
   temperature: 0,
   stream : true,
+  system: `You're a subagent who help explain specific query of user based ongoing converstation. You'll be given summarized history with query. Also with context that may or maynot be useful. When asked for response in gujarati, please use gujarati language as the students' mothertounge is gujarati.So they have better comprehsion in Gujarati.
+  `,
   messages: [
     {
       "role": "user",
