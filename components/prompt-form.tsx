@@ -35,12 +35,12 @@ export function PromptForm({
   const {scope} = useScope()
 
 
-  React.useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus()
-    }
+  // React.useEffect(() => {
+  //   if (inputRef.current) {
+  //     inputRef.current.focus()
+  //   }
 
-  }, [])
+  // }, [])
 
   return (
     <form
