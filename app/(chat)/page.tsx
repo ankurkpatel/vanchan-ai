@@ -9,7 +9,7 @@ import Reader from "@/components/reader"
 export const metadata = {
   title: 'Next.js AI Chatbot'
 }
-export const maxDuration = 60
+export const maxDuration = 200
 
 export default async function IndexPage() {
   const id = nanoid()
