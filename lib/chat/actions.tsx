@@ -153,7 +153,7 @@ async function submitUserMessage({
   let textNode: undefined | React.ReactNode
 
   const ui = render({
-    model: 'gpt-4',
+    model: 'gpt-3.5-turbo',
     provider: openai,
     initial: <SpinnerMessage />,
     messages: [
@@ -163,10 +163,6 @@ async function submitUserMessage({
 you're name is Dobu - ai study buddy. You will help answer any questions about ${scope.book}, Explain topics help them memorize, provide them different tricks that help user memorize the concepts better. Also provide easier explaination of the hard concept.
 
 always use function : showAnswerBasedOnContext
-
-your response should be broken down into smaller chunks such that it understand by user, doesn't overwhelm student who trying to learn first time. That is why import keep it short. Ask if they follow and then only explain further.
-
-
 
 `
       },
