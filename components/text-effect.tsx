@@ -1,4 +1,5 @@
 import { useScope } from "@/lib/hooks/use-scope";
+
 import { useEffect, useState } from "react";
 const useTypingEffect = (
     text: string,
@@ -28,13 +29,11 @@ const useTypingEffect = (
   };
 
 const texts = [
-  'Struggling to grasp complex topics?',
+  'Struggling to grasp any complex topics?',
   'Confused by any difficult concepts?',
   "Ask me anything, I'll help you understand",
   "Step by step",
   "Let's go, Select a book below to start",
-
- 
 ];
 
 type TextTypingEffectProps = {
@@ -59,7 +58,12 @@ export const TextTypingEffectWithTextsFadeOut = () => {
   const colors = ['text-red-600', 'text-green-600', 'text-blue-600', 'text-purple-600', 'text-pink-500', 'text-indigo-500', 'text-yellow-600'];
 
   useEffect(() => {
+
+    if(textIndex === 0) {
+      setTimeout(() => {}, 5000);}
+
     if(!isMessageDisplayed){
+  
     const circleTimeout = setTimeout(() => {
       setFadeCircle(false);
     }, timeToTypeText + 2000);

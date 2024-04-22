@@ -36,7 +36,7 @@ export async function getOpneAIText({content, history}:{ content: string, histor
 const anthropic = new Anthropic()
 
 const stream1 = await anthropic.messages.create({
-  model: "claude-3-opus-20240229",
+  model: "claude-3-haiku-20240307",
   max_tokens: 3000,
   temperature: 0,
   stream : true,

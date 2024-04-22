@@ -5,10 +5,13 @@ import { IconArrowRight } from '@/components/ui/icons'
 import { useScope } from '@/lib/hooks/use-scope'
 import { FooterText } from './footer'
 import { TextTypingEffectWithTextsFadeOut } from './text-effect'
+import { useEffect } from 'react'
 
 
 export function EmptyScreen() {
   const {scope, updateScope, isShowScopeOptions } = useScope()
+
+
   return (
     <div className="mx-auto max-w-2xl px-4">
       <div className="flex flex-col gap-2 rounded-lg border bg-background p-8">
