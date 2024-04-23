@@ -16,6 +16,7 @@
     "@anthropic-ai/sdk": "^0.20.6",
     "@langchain/openai": "^0.0.26",
     "@langchain/pinecone": "^0.0.4",
+    "@next/third-parties": "^14.2.2",
     "@pinecone-database/pinecone": "^2.2.0",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-dialog": "^1.0.5",
