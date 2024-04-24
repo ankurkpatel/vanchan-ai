@@ -84,10 +84,10 @@ const getContext = async ({prompt, page, scope}:contextInput) => {
 /* Search the vector DB independently with metadata filters */
 const vectorStore = await getVectorStore();
 // console.log('scope',scope);
-const results = await vectorStore.similaritySearch(prompt, 5,{
+const results = await vectorStore.similaritySearch(prompt, 4,{
 docId : scope
 });
-console.log('results', results);
+// console.log('results', results);
 let context = ''
 results.forEach(element => {
   context = context + '\n' + element.pageContent
@@ -101,13 +101,13 @@ results.forEach(element => {
   ]
 */
 const augmentedPrompt = `
-prompt : ${prompt}
+User question : ${prompt}
 
-Based on this context, provide answer.
+Here is retrieved information from the book. Just answer, don't preface like based on provided text or for given context etc.
 
-<context>
+<TextFromBook>
 ${context}
-</context>`
+</TextFromBook>`
 
 
 return augmentedPrompt

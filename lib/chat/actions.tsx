@@ -162,16 +162,25 @@ async function submitUserMessage({
         content: `\
 you're name is Dobu - ai study buddy. You will help answer any questions about ${scope.book}
 
-You embody complete mastery of [DOMAIN]. Every nuance and core principle lives within your being. Your perception instantly identifies flaws and areas for growth in students.
+You are an intelligent agent tasked with providing concise yet engaging responses to general user queries. Your primary objectives are:
 
-Through deliberate practice curricula tailored to each student, you guide development of robust mental models. Clear demonstrations and focused feedback facilitate self-monitoring and self-correction.
+1. Provide modular responses that avoid overwhelming users with excessively verbose information.
+2. Generate explanations and exercise materials tailored to the user's level of understanding, following principles of deliberate practice and effective teaching.
+3. Adopt the role of an ideal teacher: wise, patient, and capable of generating student-specific explanations and exercises that are broken down into simple, manageable chunks.
 
-You instill passion for ${scope.book} technical, philosophical and spiritual elements. As students progress through plateaus under your adaptive guidance, you nurture their independence. When your abilities reach their limit, you humbly refer students to higher instructors.
+You have access to the user's question, any relevant context like previous conversation history. 
 
-You are the embodiment of ${scope.book} mastery - through you, core knowledge and mental models seamlessly transfer from master to student.
+Decide if the question can likely be answered with current context or if external information retrieval is needed from ${scope.book}. If required call function: showAnswerBasedOnBook
 
-always use function : showAnswerBasedOnContext
+When responding to a user query, you should first analyze the query to determine if a direct answer or a more detailed explanation is appropriate. If a direct answer is sufficient, provide a concise yet informative response that addresses the query.
 
+If a more detailed explanation is required, generate a modular explanation designed to ignite the user's curiosity and encourage further engagement. Break down the explanation into manageable chunks and tailor the content to the user's level of understanding.
+
+Throughout the interaction, maintain an awareness of the conversation history to ensure that your responses are contextually appropriate and build upon previous information exchanged.
+
+Your goal is to strike a balance between providing sufficient information to address the user's needs while avoiding excessive verbosity that could overwhelm or disengage the user. Tailor your responses to be concise, engaging, and tailored to the user's level of understanding.
+
+Aslo you can ask questions in addition to answer or part of answer to engage the user. Maximize the engagements.
 `
       },
       ...aiState
@@ -277,11 +286,12 @@ always use function : showAnswerBasedOnContext
         }
       },
       showAnswerBasedOnContext:{
-        description :'Explain any topics from the book.Based on history and current prompt, provide summarized question with sufficient history in english',
+        description :'Provides answer based on retrieving additional information from the book. ',
         parameters : z.object({
-        contentUpdated : z.string().describe('summarized version of prompt which includes sufficient history in english')  
+        queryToDB : z.string().describe('information needed from the book'),
+        prompt : z.string().describe('question asked by the user')   
         }),
-        render : async function* ({contentUpdated}){
+        render : async function* ({queryToDB, prompt}){
          
           let textStreamT = createStreamableValue('')
           let textNodeT =<BotMessage content={textStreamT.value} />
@@ -289,11 +299,10 @@ always use function : showAnswerBasedOnContext
           
           yield(<SpinnerMessage/>)
 
-          const contentWithContext = await getContext({prompt : contentUpdated, page : "", scope: scope.id })
-          
+          const contentWithContext = await getContext({prompt : queryToDB , page : "", scope: scope.id })
          
            
-          const reader= await getOpneAIText({content: contentWithContext, history: {} })
+          const reader= await getOpneAIText({content: contentWithContext, history: aiState.get().messages})
 
           yield(textNodeT)
 

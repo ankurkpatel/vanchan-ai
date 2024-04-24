@@ -9,7 +9,14 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || '',
 });
 
-export async function getOpneAIText({content, history}:{ content: string, history:{}} ):Promise<ReadableStreamDefaultReader> {
+export type Message = {
+  role: 'user' | 'assistant' | 'system' | 'function' | 'data' | 'tool'
+  content: string
+  id: string
+  name?: string
+}
+
+export async function getOpneAIText({content, history}:{ content: string, history: Message[] } ):Promise<ReadableStreamDefaultReader> {
 
   // console.log('console content updated \n',content)
   // const response = await openai.chat.completions.create({
@@ -33,6 +40,14 @@ export async function getOpneAIText({content, history}:{ content: string, histor
   // and headers 'Content-Type': 'text/plain; charset=utf-8' and 'X-RATE-LIMIT': 'lol'.
 
 
+// const historyAnthropicPrompt = experimental_buildAnthropicPrompt(history)
+// console.log( history.slice(0, -1)
+// .map((message: any) => (JSON.stringify({
+//   role: message.role,
+//   content: message.content,
+//   name: message.name
+// }))))
+
 const anthropic = new Anthropic()
 
 const stream1 = await anthropic.messages.create({
@@ -40,21 +55,19 @@ const stream1 = await anthropic.messages.create({
   max_tokens: 3000,
   temperature: 0,
   stream : true,
-  system: ` You're an expert teacher who embodies following priciples. Your goal is to engage with the user.
-  
-Accomplished in the field: A good teacher should be highly skilled and accomplished in the domain they are teaching. Generally, teachers can only guide students up to the level they or their previous students have attained.
+  system: ` You're a subagent asked to answer question based on context and conversation history. 
 
-Teaching experience: In addition to being accomplished performers, good teachers should have experience and skill in teaching that particular field. Many expert performers struggle to effectively teach others.
+  When responding to a user query, you should first analyze the query to determine if a direct answer or a more detailed explanation is appropriate. If a direct answer is sufficient, provide a concise yet informative response that addresses the query.
 
-Provides useful feedback: A good teacher can observe the student's performance, identify weaknesses, and provide useful feedback to help the student improve.
-Designs effective practice activities: A good teacher can devise targeted practice activities and exercises to help the student overcome specific weaknesses.
+If a more detailed explanation is required, generate a modular explanation designed to ignite the user's curiosity and encourage further engagement. Break down the explanation into manageable chunks and tailor the content to the user's level of understanding.
 
-Guides mental representations: One of the most important roles of a good teacher is to help the student develop accurate mental representations that allow the student to effectively monitor and correct their own performance during practice.
+Throughout the interaction, maintain an awareness of the conversation history to ensure that your responses are contextually appropriate and build upon previous information exchanged.
 
-Tailors instruction: A good teacher understands the student's level, age, experience, and learning style, and can tailor their instruction accordingly.
-Reputation and student progress: A good teacher should have a reputation for helping students make meaningful progress, which can be validated by speaking with their former or current students.
+Your goal is to strike a balance between providing sufficient information to address the user's needs while avoiding excessive verbosity that could overwhelm or disengage the user. Tailor your responses to be concise, engaging, and tailored to the user's level of understanding.
+
+Avoid mentioned based on provided context like phrase, users doesn't need to know how you're answering the question. 
   `,
-  messages: [
+  messages: [  
     {
       "role": "user",
       "content": [
