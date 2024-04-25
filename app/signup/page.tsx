@@ -13,6 +13,9 @@ export default async function SignupPage() {
   return (
     <main className="flex flex-col p-4">
       {/* <SignupForm /> */}
+    <div className="text-center mt-4">
+      <p className="text-xl text-gray-700">Signups are not open yet. Please check back later!</p>
+    </div>
     </main>
   )
 }
