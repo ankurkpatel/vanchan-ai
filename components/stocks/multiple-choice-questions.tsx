@@ -93,32 +93,35 @@ export const MultipleChoiceQuiz: React.FC<QuizProps> = ({ questions }) => {
       {questions && questions.map((question) => (
         <Card key={question.id} className='my-2'>
   <CardHeader>
-        <div className="flex items-center space-x-1">
+        {/* <div className="flex items-center space-x-1">
           <div className="text-sm font-medium leading-none">{question.id}</div>
-        </div>
+        </div> */}
         <CardDescription>{question.text}</CardDescription>
       </CardHeader>
   
           {question.choices.map((choice) => (
-            <CardContent key={choice.label}>
-              <label>
-                <input
+            <CardContent key={choice.label} className='text-sm text-zinc-500'>
+              <input
                   type="radio"
                   name={question.id}
                   value={choice.value || choice.label}
                   checked={userAnswers[question.id] === (choice.value || choice.label)}
                   onChange={() => handleAnswerChange(question.id, choice.value || choice.label)}
                 />
-                {choice.label}
-              </label>
+              <span className='p-2'>
+               {choice.label}. {choice.value}
+              </span>
             </CardContent>
           ))}
         </Card>
       ))}
-      <CardFooter className="flex gap-2">
-        <Button size="sm" onClick={handleSubmit}>Submit</Button>
-        {showResult && <p>{evaluateAnswers()}</p>}
-      </CardFooter>
+      {/* <CardFooter className="flex"> */}
+      <div className="flex gap-2">
+      <Button size="sm" onClick={handleSubmit}>Submit</Button>
+        <span className='text-sm'>{showResult && <p>{evaluateAnswers()}</p>}</span>
+      </div>
+       
+      {/* </CardFooter> */}
     </div>
   );
 };
